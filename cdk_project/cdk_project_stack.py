@@ -1,9 +1,6 @@
-from aws_cdk import (
-    # Duration,
-    Stack,
-    # aws_sqs as sqs,
-)
 from constructs import Construct
+from aws_cdk import App, Stack                    # core constructs
+from aws_cdk import aws_s3 as S3
 
 class CdkProjectStack(Stack):
 
@@ -12,8 +9,12 @@ class CdkProjectStack(Stack):
 
         # The code that defines your stack goes here
 
-        # example resource
-        # queue = sqs.Queue(
-        #     self, "CdkProjectQueue",
-        #     visibility_timeout=Duration.seconds(300),
-        # )
+        S3.Bucket(
+            self,
+            "myBucketId",
+            bucket_name = "test-s3-cdk-ci",
+            access_control = S3.BucketAccessControl.PRIVATE,
+            encryption = S3.BucketEncryption.S3_MANAGED,
+            versioned = False,
+            block_public_access = S3.BlockPublicAccess.BLOCK_ALL
+        )
