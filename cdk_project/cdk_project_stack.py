@@ -1,5 +1,5 @@
 from constructs import Construct
-from aws_cdk import App, Stack                    # core constructs
+from aws_cdk import App, Stack, CfnOutput                    # core constructs
 from aws_cdk import aws_s3 as S3
 
 class CdkProjectStack(Stack):
@@ -8,8 +8,8 @@ class CdkProjectStack(Stack):
         super().__init__(scope, construct_id, **kwargs)
 
         # The code that defines your stack goes here
-
-        S3.Bucket(
+        print(self.node.try_get_context('prod'))
+        myS3 = S3.Bucket(
             self,
             "myBucketId",
             bucket_name = "test-s3-cdk-ci",
@@ -18,3 +18,8 @@ class CdkProjectStack(Stack):
             versioned = False,
             block_public_access = S3.BlockPublicAccess.BLOCK_ALL
         )
+        
+        # print the IAM role arn for this service account
+        CfnOutput(self, "S3Name", value=myS3.bucket_name)
+        
+        

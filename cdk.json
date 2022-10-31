@@ -35,6 +35,19 @@
     "@aws-cdk/core:target-partitions": [
       "aws",
       "aws-cn"
-    ]
+    ],
+    "env":{
+      "dev": {
+        "region":"us-east-1",
+        "lambda_param":{
+          "function_name":"poc_function"
+        }
+        }
+        ,
+      "prod":{
+        "region":"us-east-1"
+      }
+
+    }
   }
 }
